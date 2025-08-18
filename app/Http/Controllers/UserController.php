@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\UserRequest;
+use App\Http\Requests\PasswordUpdateRequest;
 use App\Models\User;
 use Exception;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
@@ -40,6 +42,25 @@ class UserController extends Controller
         return view('users.edit',['user' => $user]);
     }
 
+    
+    public function updatePassword(PasswordUpdateRequest $request, User $user)
+    {
+    
+        if (!Hash::check($request->current_password, $user->password)) {
+            return back()->withErrors(['current_password' => 'A senha atual não confere.']);
+        }
+
+        if(Hash::check($request->password,$user->password)){
+            return back()->withErrors(['password' => 'A nova senha não pode ser igual à senha atual.']);
+        }
+
+        $user->update([
+            'password' => $request->password,
+        ]);
+
+        return redirect()->route('user.index')->with('success', 'Senha atualizada com sucesso!');
+    }
+
     public function update(UserRequest $request, User $user){
 
         try {
@@ -48,6 +69,12 @@ class UserController extends Controller
                 'email' => $request->email,
             ]);
 
+            if($request->filled('password')){
+                $data['password'] = $request->password;
+            }
+
+            $user->update($data);
+
 
             return redirect()->route('user.edit',['user' => $user->id] )->with('success', 'usuário editado com sucesso!');
 
@@ -55,6 +82,11 @@ class UserController extends Controller
             return back()->withInput()->with('error','Usuário não encontrado!');
         }
 
+    }
+
+    public function editPassword(User $user)
+    {
+        return view('users.edit-password', ['user' => $user]);
     }
 
 }
