@@ -42,7 +42,7 @@ class UserController extends Controller
         return view('users.edit',['user' => $user]);
     }
 
-    
+
     public function updatePassword(PasswordUpdateRequest $request, User $user)
     {
     
