@@ -19,6 +19,11 @@ class UserController extends Controller
         return view('users.index',['users'=>$users]);
     }
 
+    public function show(User $user){
+
+        return view('users.show', ['user' => $user]);
+    }
+
     public function  create() {
         return view('users.create');
     }
@@ -26,13 +31,13 @@ class UserController extends Controller
     public function store(UserRequest $request){
 
         try {
-            User::create([
+            $user = User::create([
                 'name' => $request->name,
                 'email' => $request->email,
                 'password' => $request->password
             ]);
 
-            return redirect()->route('user.create')->with('success', 'Usuário cadastrado com sucesso');
+            return redirect()->route('user.show', $user->id)->with('success', 'Usuário cadastrado com sucesso');
         } catch (Exception $e) {
             return back()->withInput()->with('error', 'Usuário não cadastrado com sucesso');
         }
@@ -58,25 +63,27 @@ class UserController extends Controller
             'password' => $request->password,
         ]);
 
-        return redirect()->route('user.index')->with('success', 'Senha atualizada com sucesso!');
+        return redirect()->route('user.show',['user' => $user->id])->with('success', 'Senha atualizada com sucesso!');
     }
 
     public function update(UserRequest $request, User $user){
 
         try {
-            $user->update([
-                'name'=> $request->name,
-                'email' => $request->email,
-            ]);
+            $data = [
+            'name'  => $request->name,
+            'email' => $request->email,
+            ];
 
-            if($request->filled('password')){
-                $data['password'] = $request->password;
+       
+            if ($request->filled('password')) {
+            $data['password'] = $request->password; 
             }
+
 
             $user->update($data);
 
 
-            return redirect()->route('user.edit',['user' => $user->id] )->with('success', 'usuário editado com sucesso!');
+            return redirect()->route('user.show',['user' => $user->id] )->with('success', 'usuário editado com sucesso!');
 
         } catch (Exception $e) {
             return back()->withInput()->with('error','Usuário não encontrado!');

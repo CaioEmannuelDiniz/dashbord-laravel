@@ -10,6 +10,8 @@ Route::get('/', function () {
 
 Route::get('/index-user',[UserController::class,'index'])->name('user.index');
 
+Route::get('/show-user/{user}',[UserController::class,'show'])->name('user.show');
+
 Route::get('/create-user',[UserController::class,'create'])->name('user.create');
 
 Route::post('/store-user',[UserController::class,'store'])->name('user.store');

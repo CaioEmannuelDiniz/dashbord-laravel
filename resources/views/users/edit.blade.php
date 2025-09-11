@@ -5,7 +5,11 @@
     <div class="content">
         <div class="content-title">
             <h1 class="page-title">Editar Usuário</h1>
-            <a href="{{ route('user.index') }}" class="btn-info">Listar</a>
+            <span>
+                <a href="{{ route('user.index') }}" class="btn-info">Listar</a>
+                <a href="{{ route('user.editPassword', ['user' => $user->id]) }}" class="btn-alert">Editar a senha</a>
+                <a href="{{ route('user.show', ['user' => $user->id]) }}" class="btn-primary">Vsiaulizar</a>
+            </span>
         </div>
 
         <x-alert />
