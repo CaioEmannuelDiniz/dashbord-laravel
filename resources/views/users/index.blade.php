@@ -27,17 +27,24 @@
                             <td class="table-cell">{{ $user->name }}</td>
                             <td class="table-cell">{{ $user->email }}</td>
                             <td class="table-actions">
-                                <a href="{{ route ('user.show',['user' => $user->id ])}}" class="btn-primary">Visualizar</a> 
-                                <a href="{{route('user.edit',['user' => $user->id ]) }}" class="btn-warning">Editar</a>
-                                <a href="{{route('user.editPassword',['user' => $user->id]) }}" class="btn-alert">Editar a senha</a>
-                                <a href="" class="btn-danger">Apagar</a>
+                                <a href="{{ route('user.show', ['user' => $user->id]) }}" class="btn-primary">Visualizar</a>
+                                <a href="{{ route('user.edit', ['user' => $user->id]) }}" class="btn-warning">Editar</a>
+                                <a href="{{ route('user.editPassword', ['user' => $user->id]) }}" class="btn-alert">Editar a
+                                    senha</a>
+
+                                <form action="{{ route('user.destroy', ['user' => $user->id]) }}" method="POST">
+                                    @csrf
+                                    @method('delete')
+                                    <button type="submit " class="btn-danger" onclick="return confirm('Tem certeza que gostaria de apagar esse registro?')">Apagar</button>
+                                </form>
+
                             </td>
                         </tr>
                     @empty
                         <div class=" alert-error" ">
-                                Nenhum usuário encontrado!
-                            </div>
-                    @endforelse
+                                        Nenhum usuário encontrado!
+                                    </div>
+     @endforelse
                 </tbody>
             </table>
         </div>

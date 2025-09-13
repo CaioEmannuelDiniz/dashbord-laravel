@@ -8,6 +8,7 @@ use App\Http\Requests\PasswordUpdateRequest;
 use App\Models\User;
 use Exception;
 use Illuminate\Support\Facades\Hash;
+use PhpParser\Node\Stmt\TryCatch;
 
 class UserController extends Controller
 {
@@ -94,6 +95,18 @@ class UserController extends Controller
     public function editPassword(User $user)
     {
         return view('users.edit-password', ['user' => $user]);
+    }
+
+    public function destroy(User $user){
+
+        try{
+            $user->delete();
+
+            return redirect()->route('user.index')->with('success','Usuario deletado com sucesso!');
+        }
+        catch(Exception $e){
+            return redirect()->route('user.index')->with('error','Usuario não deletado!');
+        }
     }
 
 }
