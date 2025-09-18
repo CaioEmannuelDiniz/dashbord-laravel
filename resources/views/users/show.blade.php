@@ -10,12 +10,14 @@
                 <a href="{{ route('user.edit', ['user' => $user->id]) }}" class="btn-warning">Editar</a>
                 <a href="{{ route('user.editPassword', ['user' => $user->id]) }}" class="btn-alert">Editar a senha</a>
 
-                <form action="{{ route('user.destroy', ['user' => $user->id]) }}" method="POST">
+                <form id="delete-form-{{ $user->id }}" action="{{ route('user.destroy', $user->id) }}" method="POST" style="display: inline;">
                     @csrf
-                    @method('delete')
-                    <button type="submit " class="btn-danger"
-                        onclick="return confirm('Tem certeza que gostaria de apagar esse registro?')">Apagar</button>
+                    @method('DELETE')
+                    <button type="button" class="btn-danger" onclick="confirmDelete({{ $user->id }})">
+                        Apagar
+                    </button>
                 </form>
+
             </span>
         </div>
 
