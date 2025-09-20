@@ -40,11 +40,11 @@
                 </div>
                 <div class="mb-1">
                     <span class="font-bold">Cadastrado em:</span>
-                    <span>{{ $user->created_at->setTimezone('America/Fortaleza')->format('d/m/Y H:i') }}</span>
+                    <span>{{ $user->created_at->format('d/m/Y H:i') }}</span>
                 </div>
                 <div class="mb-1">
                     <span class="font-bold">Editado em:</span>
-                    <span>{{ $user->updated_at->setTimezone('America/Fortaleza')->format('d/m/Y H:i') }}</span>
+                    <span>{{ $user->updated_at->format('d/m/Y H:i') }}</span>
                 </div>
             </div>
         </div>
