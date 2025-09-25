@@ -6,11 +6,13 @@
         <div class="content-title">
             <h1 class="page-title">Detalhes do Usuário</h1>
             <span class="flex space-x-1">
+                <a href="{{ route('user.generate-pdf', ['user' => $user->id]) }}" class="btn-warning">Gerar PDF</a>
                 <a href="{{ route('user.index') }}" class="btn-info">Listar</a>
                 <a href="{{ route('user.edit', ['user' => $user->id]) }}" class="btn-warning">Editar</a>
                 <a href="{{ route('user.editPassword', ['user' => $user->id]) }}" class="btn-alert">Editar a senha</a>
 
-                <form id="delete-form-{{ $user->id }}" action="{{ route('user.destroy', $user->id) }}" method="POST" style="display: inline;">
+                <form id="delete-form-{{ $user->id }}" action="{{ route('user.destroy', $user->id) }}" method="POST"
+                    style="display: inline;">
                     @csrf
                     @method('DELETE')
                     <button type="button" class="btn-danger" onclick="confirmDelete({{ $user->id }})">

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\UserRequest;
 use App\Http\Requests\PasswordUpdateRequest;
 use App\Models\User;
+use Barryvdh\DomPDF\PDF;
 use Exception;
 use Illuminate\Support\Facades\Hash;
 use PhpParser\Node\Stmt\TryCatch;
@@ -109,4 +110,13 @@ class UserController extends Controller
         }
     }
 
+
+    public function generatePdf(User $user,Pdf $pdf){
+        
+        $pdf = $pdf ->loadView('users.generate-pdf',['user' => $user])->setPaper('a4','portrait');
+
+        return $pdf->download('view_user.pdf');
+
+
+    }
 }
